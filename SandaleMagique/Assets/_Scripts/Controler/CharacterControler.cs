@@ -31,11 +31,11 @@ public class CharacterControler : MonoBehaviour {
         Vector3 pos = transform.position;
         if(xAxis > 0)
         {
-            pos.x += xAxis * m_character.Speed * Time.deltaTime;
+            pos.x += 1 * m_character.Speed * Time.deltaTime;
         }
         else
         {
-            pos.x += xAxis * m_character.Speed * Time.deltaTime;
+            pos.x += -1 * m_character.Speed * Time.deltaTime;
         }
         transform.position = pos;
     }
