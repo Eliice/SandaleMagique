@@ -10,18 +10,23 @@ public enum E_Direction
 public class CharacterControler : MonoBehaviour {
 
 
-
-
     private InputManager m_manager;
     private E_Direction m_direction = E_Direction.RIGHT;
     private Character m_character = null;
+    private Animator m_animator = null;
 
-	// Use this for initialization
-	void Start () {
+
+
+    // Use this for initialization
+    void Start () {
         m_manager = InputManager.Instance;
-        m_manager.xAxis += Move;
+ 
         m_character = GetComponent<Character>();
-	}
+        m_animator = GetComponent<Animator>();
+
+        m_manager.xAxis += Move;
+        m_manager.noMove += NoMove;
+    }
 
 
     private void Move(float xAxis)
@@ -52,6 +57,12 @@ public class CharacterControler : MonoBehaviour {
         {
             transform.Rotate(0,-180, 0);
         }
+    }
+
+
+    private void NoMove()
+    {
+        m_animator.SetBool("Idle", true);
     }
 
 }

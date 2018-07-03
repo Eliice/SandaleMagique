@@ -18,11 +18,13 @@ public class InputManager : MonoBehaviour {
     public delegate void AxisHandler(float axisValue);
     public event AxisHandler xAxis;
     public event InputHandler AButton;
+    public event InputHandler noMove;
 
     [SerializeField, Range(0, 1)]
     private float m_xSensitivity = 0;
 
 
+    private Animator m_animator = null;
     private void Awake()
     {
         if (m_instance == null)
@@ -31,9 +33,10 @@ public class InputManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
-	void Update () {
+    private void FixedUpdate()
+    {
         ProcessEvent();
-	}
+    }
 
 
 
@@ -44,14 +47,13 @@ public class InputManager : MonoBehaviour {
 
         if(!moving)
         {
-            ///TODO
-            ///Handle back to idle state
+            noMove();
         }
     }
 
     private void ProcessAButton()
     {
-        if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+        if (Input.GetButton("Jump"))
             AButton();
     }
 
