@@ -13,11 +13,14 @@ public class Jump : MonoBehaviour {
     private Keyframe[] m_curveKeys;
     private float m_LastKeyTimer;
 
+
+    private float m_initY = 0f;
     public void TriggerJump()
     {
         if(!m_animator.GetBool("Jump"))
         {
             m_animator.SetBool("Jump", true);
+            m_initY = transform.position.y;
             Debug.Log("poke");
         }
     }
@@ -38,12 +41,9 @@ public class Jump : MonoBehaviour {
             return;
         }
         Vector3 pos = transform.position;
-        pos.y += m_jumpCurve.Evaluate(m_timer);
+        pos.y = m_jumpCurve.Evaluate(m_timer) + m_initY;
         transform.position = pos;
         m_timer += Time.fixedDeltaTime;
-
-
-
 
         if (m_timer > m_LastKeyTimer)
         {
