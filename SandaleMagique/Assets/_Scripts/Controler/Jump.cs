@@ -38,7 +38,7 @@ public class Jump : MonoBehaviour {
             return;
         }
         Vector3 pos = transform.position;
-        pos.y = m_jumpCurve.Evaluate(m_timer);
+        pos.y += m_jumpCurve.Evaluate(m_timer);
         transform.position = pos;
         m_timer += Time.fixedDeltaTime;
 
