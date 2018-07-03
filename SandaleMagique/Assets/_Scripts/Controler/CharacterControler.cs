@@ -37,6 +37,7 @@ public class CharacterControler : MonoBehaviour {
         {
             pos.x += xAxis * m_character.Speed * Time.deltaTime;
         }
+        transform.position = pos;
     }
 
 

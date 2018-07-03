@@ -58,7 +58,6 @@ public class InputManager : MonoBehaviour {
     private bool ProcessXAxis()
     {
         float xValue = Input.GetAxis("Horizontal");
-        Debug.Log(xValue);
         if (xValue >= m_xSensitivity || xValue <= -m_xSensitivity)
         {
             xAxis(xValue);
