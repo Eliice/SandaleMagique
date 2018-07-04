@@ -47,7 +47,6 @@ public class Jump : MonoBehaviour {
 
         if (m_timer > m_LastKeyTimer)
         {
-            m_animator.SetBool("Jump", false);
             m_timer = 0;
         }
     }
