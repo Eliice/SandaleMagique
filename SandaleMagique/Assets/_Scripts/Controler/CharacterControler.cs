@@ -24,10 +24,21 @@ public class CharacterControler : MonoBehaviour {
         m_character = GetComponent<Character>();
         m_animator = GetComponent<Animator>();
 
+        OnEnable();
+    }
+
+
+    private void OnEnable()
+    {
         m_manager.xAxis += Move;
         m_manager.noMove += NoMove;
     }
 
+    private void OnDisable()
+    {
+        m_manager.xAxis -= Move;
+        m_manager.noMove -= NoMove;
+    }
 
     private void Move(float xAxis)
     {

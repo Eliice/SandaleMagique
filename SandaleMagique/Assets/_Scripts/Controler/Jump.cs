@@ -21,7 +21,6 @@ public class Jump : MonoBehaviour {
         {
             m_animator.SetBool("Jump", true);
             m_initY = transform.position.y;
-            Debug.Log("poke");
         }
     }
 
@@ -29,9 +28,19 @@ public class Jump : MonoBehaviour {
     private void Start()
     {
         m_animator = GetComponent<Animator>();
-        InputManager.Instance.AButton += TriggerJump;
         m_curveKeys = m_jumpCurve.keys;
         m_LastKeyTimer = m_curveKeys[m_curveKeys.Length-1].time;
+        OnEnable();
+    }
+
+    private void OnEnable()
+    {
+        InputManager.Instance.AButton += TriggerJump;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.AButton -= TriggerJump;
     }
 
     private void FixedUpdate()
