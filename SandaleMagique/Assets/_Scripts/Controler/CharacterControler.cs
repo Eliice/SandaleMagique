@@ -42,7 +42,6 @@ public class CharacterControler : MonoBehaviour {
 
     private void Move(float xAxis)
     {
-        Debug.Log(xAxis);
         Rotate(xAxis);
         Vector3 pos = transform.position;
         if(xAxis > 0)

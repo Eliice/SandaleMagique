@@ -61,7 +61,14 @@ public class Jump : MonoBehaviour {
         }
     }
 
-    
+
+    public void Reset()
+    {
+        m_timer = 0;
+        m_animator.SetBool("Jump", false);
+        OnEnable();
+    }
+
 
 
 }
