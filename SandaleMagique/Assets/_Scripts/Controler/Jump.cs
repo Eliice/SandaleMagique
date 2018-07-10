@@ -22,6 +22,7 @@ public class Jump : MonoBehaviour {
             m_animator.SetBool("Jump", true);
             m_initY = transform.position.y;
         }
+        OnDisable();
     }
 
 
@@ -33,12 +34,12 @@ public class Jump : MonoBehaviour {
         OnEnable();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         InputManager.Instance.AButton += TriggerJump;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         InputManager.Instance.AButton -= TriggerJump;
     }
