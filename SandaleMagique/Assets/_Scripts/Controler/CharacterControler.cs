@@ -17,7 +17,6 @@ public class CharacterControler : MonoBehaviour {
 
 
 
-    // Use this for initialization
     void Start () {
         m_manager = InputManager.Instance;
  
@@ -30,14 +29,14 @@ public class CharacterControler : MonoBehaviour {
 
     private void OnEnable()
     {
-        m_manager.xAxis += Move;
-        m_manager.noMove += NoMove;
+        m_manager.E_xAxis += Move;
+        m_manager.E_noMove.AddListener(NoMove);
     }
 
     private void OnDisable()
     {
-        m_manager.xAxis -= Move;
-        m_manager.noMove -= NoMove;
+        m_manager.E_xAxis += Move;
+        m_manager.E_noMove.RemoveListener(NoMove);
     }
 
     private void Move(float xAxis)
@@ -74,5 +73,4 @@ public class CharacterControler : MonoBehaviour {
     {
         m_animator.SetBool("Idle", true);
     }
-
 }

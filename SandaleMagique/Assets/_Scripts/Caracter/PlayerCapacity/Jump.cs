@@ -13,6 +13,7 @@ public class Jump : MonoBehaviour {
     private Keyframe[] m_curveKeys;
     private float m_LastKeyTimer;
 
+    
 
     private float m_initY = 0f;
     public void TriggerJump()
@@ -31,17 +32,17 @@ public class Jump : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         m_curveKeys = m_jumpCurve.keys;
         m_LastKeyTimer = m_curveKeys[m_curveKeys.Length-1].time;
-        OnEnable();
+        InputManager.Instance.E_aButton.AddListener(TriggerJump);
     }
 
     public void OnEnable()
     {
-        InputManager.Instance.AButton += TriggerJump;
+        InputManager.Instance.E_aButton.AddListener(TriggerJump);
     }
 
     public void OnDisable()
     {
-        InputManager.Instance.AButton -= TriggerJump;
+        InputManager.Instance.E_aButton.RemoveListener(TriggerJump);
     }
 
     private void FixedUpdate()
@@ -58,9 +59,19 @@ public class Jump : MonoBehaviour {
         if (m_timer > m_LastKeyTimer)
         {
             m_timer = 0;
+            m_animator.SetBool("Jump", false);
         }
     }
 
+    private void Update()
+    {
+        if (InputManager.Instance.CheckRegisterAButton())
+        {
+            OnEnable();
+            enabled = false;
+        }
+
+    }
 
     public void Reset()
     {

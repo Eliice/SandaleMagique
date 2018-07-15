@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 
 public class InputManager : MonoBehaviour {
@@ -14,11 +15,10 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public delegate void InputHandler();
-    public delegate void AxisHandler(float axisValue);
-    public event AxisHandler xAxis;
-    public event InputHandler AButton;
-    public event InputHandler noMove;
+    public UnityEvent E_aButton;
+    public UnityEvent E_noMove;
+    public delegate void D_AxisEvent(float axisValue);
+    public D_AxisEvent E_xAxis;
 
     [SerializeField, Range(0, 1)]
     private float m_xSensitivity = 0;
@@ -28,7 +28,9 @@ public class InputManager : MonoBehaviour {
     private void Awake()
     {
         if (m_instance == null)
+        {
             m_instance = this;
+        }
         else
             Destroy(gameObject);
     }
@@ -47,14 +49,14 @@ public class InputManager : MonoBehaviour {
 
         if(!moving)
         {
-            noMove();
+            E_noMove.Invoke();
         }
     }
 
     private void ProcessAButton()
     {
-        if (Input.GetButton("Jump"))
-            AButton();
+        if (Input.GetButton("Jump") && E_aButton != null)
+            E_aButton.Invoke();
     }
 
     private bool ProcessXAxis()
@@ -62,10 +64,16 @@ public class InputManager : MonoBehaviour {
         float xValue = Input.GetAxis("Horizontal");
         if (xValue >= m_xSensitivity || xValue <= -m_xSensitivity)
         {
-            xAxis(xValue);
+            E_xAxis.Invoke(xValue);
             return true;
         }
         return false;
 
+    }
+
+
+    public bool CheckRegisterAButton()
+    {
+        return E_aButton == null;
     }
 }

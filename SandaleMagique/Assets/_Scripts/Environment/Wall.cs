@@ -21,7 +21,7 @@ public class Wall : MonoBehaviour {
         m_wallJumpCapacity.TriggerWallSlide();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         m_wallJumpCapacity.DisableWallSlide();
     }
