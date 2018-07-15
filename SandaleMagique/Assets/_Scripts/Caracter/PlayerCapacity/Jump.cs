@@ -79,7 +79,4 @@ public class Jump : MonoBehaviour {
         m_animator.SetBool("Jump", false);
         OnEnable();
     }
-
-
-
 }
