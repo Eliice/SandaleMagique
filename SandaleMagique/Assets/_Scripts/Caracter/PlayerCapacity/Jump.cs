@@ -3,9 +3,6 @@
 public class Jump : MonoBehaviour {
 
     [SerializeField]
-    private AnimationCurve m_jumpCurve;
-
-    [SerializeField]
     private float m_horizontalSpeed;
     [SerializeField]
     private float m_gravity;
@@ -17,10 +14,6 @@ public class Jump : MonoBehaviour {
     private Animator m_animator = null;
     
     private float m_timer = 0f;
-
-
-    private Keyframe[] m_curveKeys;
-    private float m_LastKeyTimer;
 
     
 
@@ -39,8 +32,6 @@ public class Jump : MonoBehaviour {
     private void Start()
     {
         m_animator = GetComponent<Animator>();
-        m_curveKeys = m_jumpCurve.keys;
-        m_LastKeyTimer = m_curveKeys[m_curveKeys.Length-1].time;
         InputManager.Instance.E_aButton.AddListener(TriggerJump);
     }
 
@@ -58,19 +49,16 @@ public class Jump : MonoBehaviour {
     {
         if (!m_animator.GetBool("Jump"))
         {
-            return;
-        }
-        Vector3 pos = transform.position;
-        pos.y = -(m_gravity / 2) * (m_timer * m_timer) + m_horizontalSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
-        //pos.y = m_jumpCurve.Evaluate(m_timer) + m_initY;
-        transform.position = pos;
-        m_timer += Time.fixedDeltaTime;
-
-        if (m_timer > m_LastKeyTimer)
-        {
             m_timer = 0;
             m_animator.SetBool("Jump", false);
+            return;
         }
+
+        Vector3 pos = transform.position;
+        pos.y = -(m_gravity / 2) * Mathf.Pow(m_timer ,2) + m_horizontalSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
+        transform.position = pos;
+
+        m_timer += Time.fixedDeltaTime;
     }
 
     private void Update()
