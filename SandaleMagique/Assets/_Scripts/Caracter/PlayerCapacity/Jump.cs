@@ -49,16 +49,20 @@ public class Jump : MonoBehaviour {
     {
         if (!m_animator.GetBool("Jump"))
         {
-            m_timer = 0;
-            m_animator.SetBool("Jump", false);
+            Reset();
             return;
         }
 
         Vector3 pos = transform.position;
-        pos.y = -(m_gravity / 2) * Mathf.Pow(m_timer ,2) + m_horizontalSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
-        transform.position = pos;
-
         m_timer += Time.fixedDeltaTime;
+
+        if ((pos.y - m_initY) <= m_jumpMaxHeigt)
+        {
+            pos.y = -m_gravity / 2 * Mathf.Pow(m_timer, 2) + m_horizontalSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
+            transform.position = pos;
+        }
+        else
+            Reset();
     }
 
     private void Update()
@@ -68,13 +72,12 @@ public class Jump : MonoBehaviour {
             OnEnable();
             enabled = false;
         }
-
     }
 
     public void Reset()
     {
         m_timer = 0;
         m_animator.SetBool("Jump", false);
-        OnEnable();
+        //OnEnable();
     }
 }
