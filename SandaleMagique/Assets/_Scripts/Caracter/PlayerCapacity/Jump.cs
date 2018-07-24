@@ -3,8 +3,6 @@
 public class Jump : MonoBehaviour {
 
     [SerializeField]
-    private float m_horizontalSpeed;
-    [SerializeField]
     private float m_gravity;
     [SerializeField]
     private float m_jumpMaxHeigt;
@@ -14,6 +12,7 @@ public class Jump : MonoBehaviour {
     private Animator m_animator = null;
     
     private float m_timer = 0f;
+    private float m_characterSpeed;
 
     
 
@@ -33,6 +32,7 @@ public class Jump : MonoBehaviour {
     {
         m_animator = GetComponent<Animator>();
         InputManager.Instance.E_aButton.AddListener(TriggerJump);
+        m_characterSpeed = gameObject.GetComponent<Character>().Speed;
     }
 
     public void OnEnable()
@@ -58,7 +58,7 @@ public class Jump : MonoBehaviour {
 
         if ((pos.y - m_initY) <= m_jumpMaxHeigt)
         {
-            pos.y = -m_gravity / 2 * Mathf.Pow(m_timer, 2) + m_horizontalSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
+            pos.y = -m_gravity / 2 * Mathf.Pow(m_timer, 2) + m_characterSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
             transform.position = pos;
         }
         else
