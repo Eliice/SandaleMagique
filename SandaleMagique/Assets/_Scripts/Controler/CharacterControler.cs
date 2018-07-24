@@ -35,7 +35,7 @@ public class CharacterControler : MonoBehaviour {
 
     private void OnDisable()
     {
-        m_manager.E_xAxis += Move;
+        m_manager.E_xAxis -= Move;
         m_manager.E_noMove.RemoveListener(NoMove);
     }
 
