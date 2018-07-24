@@ -29,7 +29,7 @@ public class SpeCapacity : MonoBehaviour {
     private void Start()
     {
         m_animator = GetComponent<Animator>();
-        InputManager.Instance.E_aButton.AddListener(TriggerSpeCap);
+        InputManager.Instance.E_xButton.AddListener(TriggerSpeCap);
 
         if (m_consomationPerUse > m_gaugeBarMaxCapacity)
             m_consomationPerUse = m_gaugeBarMaxCapacity;
@@ -37,12 +37,12 @@ public class SpeCapacity : MonoBehaviour {
 
     public void OnEnable()
     {
-        InputManager.Instance.E_aButton.AddListener(TriggerSpeCap);
+        InputManager.Instance.E_xButton.AddListener(TriggerSpeCap);
     }
 
     public void OnDisable()
     {
-        InputManager.Instance.E_aButton.RemoveListener(TriggerSpeCap);
+        InputManager.Instance.E_xButton.RemoveListener(TriggerSpeCap);
     }
 
     private void FixedUpdate()
