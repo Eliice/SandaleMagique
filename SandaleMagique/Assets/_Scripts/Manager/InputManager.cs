@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour {
     }
 
     public UnityEvent E_aButton;
+    public UnityEvent E_xButton;
     public UnityEvent E_noMove;
     public delegate void D_AxisEvent(float axisValue);
     public D_AxisEvent E_xAxis;
@@ -59,6 +60,13 @@ public class InputManager : MonoBehaviour {
             E_aButton.Invoke();
     }
 
+    private void ProcessXButton()
+    {
+        if (Input.GetButton("SpeCap") && E_xButton != null)
+            E_xButton.Invoke();
+    }
+
+
     private bool ProcessXAxis()
     {
         float xValue = Input.GetAxis("Horizontal");
@@ -71,9 +79,13 @@ public class InputManager : MonoBehaviour {
 
     }
 
-
     public bool CheckRegisterAButton()
     {
         return E_aButton == null;
+    }
+
+    public bool CheckRegisterXButton()
+    {
+        return E_xButton == null;
     }
 }
