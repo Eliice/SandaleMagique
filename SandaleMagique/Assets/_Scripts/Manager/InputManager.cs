@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour {
     public UnityEvent E_noMove;
     public delegate void D_AxisEvent(float axisValue);
     public D_AxisEvent E_xAxis;
+    public D_AxisEvent E_yAxis;
 
     [SerializeField, Range(0, 1)]
     private float m_xSensitivity = 0;
@@ -47,8 +48,9 @@ public class InputManager : MonoBehaviour {
     {
         bool moving = ProcessXAxis();
         ProcessAButton();
+        ProcessXButton();
 
-        if(!moving)
+        if (!moving)
         {
             E_noMove.Invoke();
         }
@@ -76,7 +78,17 @@ public class InputManager : MonoBehaviour {
             return true;
         }
         return false;
+    }
 
+    private bool ProcessYAxis()
+    {
+        float yValue = Input.GetAxis("Vertical");
+        if (yValue >= m_xSensitivity || yValue <= -m_xSensitivity)
+        {
+            E_yAxis.Invoke(yValue);
+            return true;
+        }
+        return false;
     }
 
     public bool CheckRegisterAButton()
