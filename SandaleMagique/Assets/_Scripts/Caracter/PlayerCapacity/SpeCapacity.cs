@@ -8,7 +8,7 @@ public class SpeCapacity : MonoBehaviour
     [SerializeField]
     private int m_gaugeBarMaxCapacity;
     [SerializeField]
-    private int m_consomationPerUse;
+    private int m_consomationRatePerUse;
     [SerializeField]
     private int m_refillRateModifier;
     [SerializeField]
@@ -41,8 +41,8 @@ public class SpeCapacity : MonoBehaviour
         m_cControler = gameObject.GetComponent<CharacterControler>();
         m_characterSpeed = GetComponent<Character>().Speed;
 
-        if (m_consomationPerUse > m_gaugeBarMaxCapacity)
-            m_consomationPerUse = m_gaugeBarMaxCapacity;
+        if (m_consomationRatePerUse > m_gaugeBarMaxCapacity)
+            m_consomationRatePerUse = m_gaugeBarMaxCapacity;
     }
 
     public void OnEnable()
@@ -57,15 +57,9 @@ public class SpeCapacity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!m_animator.GetBool("SpeCap"))
+        Vector3 pos = transform.position;
+        if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0)
         {
-            Reset();
-            return;
-        }
-        else
-        {
-            //do movement
-            Vector3 pos = transform.position;
             switch (m_cControler.HorizontalDir)
             {
                 case E_Direction.RIGHT: pos.x += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime; break;
@@ -78,7 +72,23 @@ public class SpeCapacity : MonoBehaviour
             }
 
             transform.position = pos;
+            m_gaugeValue -= m_consomationRatePerUse;
         }
+        else if (m_animator.GetBool("SpeCap") && m_gaugeValue <= 0)
+        {
+            if (m_gaugeValue < 0)
+                m_gaugeValue = 0;
+
+            Reset();
+            return;
+        }
+    }
+    public void FillSpeCapBar(Vector3 oldPos, Vector3 currentPos)
+    {
+        if (oldPos.y > currentPos.y && m_gaugeValue < m_gaugeBarMaxCapacity)
+            m_gaugeValue += 1 * m_refillRateModifier;
+        if (m_gaugeValue > m_gaugeBarMaxCapacity)
+            m_gaugeValue = m_gaugeBarMaxCapacity;
     }
 
     private void Update()
@@ -93,6 +103,6 @@ public class SpeCapacity : MonoBehaviour
     public void Reset()
     {
         m_animator.SetBool("SpeCap", false);
-        //OnEnable();
+        OnEnable();
     }
 }

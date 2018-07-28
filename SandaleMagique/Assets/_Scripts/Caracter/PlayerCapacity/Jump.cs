@@ -13,7 +13,7 @@ public class Jump : MonoBehaviour {
     
     private float m_timer = 0f;
     private float m_characterSpeed;
-
+    private Vector3 m_oldPosition;
     
 
     private float m_initY = 0f;
@@ -56,6 +56,7 @@ public class Jump : MonoBehaviour {
         Vector3 pos = transform.position;
         m_timer += Time.fixedDeltaTime;
 
+
         if ((pos.y - m_initY) <= m_jumpMaxHeigt)
         {
             pos.y = -m_gravity / 2 * Mathf.Pow(m_timer, 2) + m_characterSpeed * Mathf.Sin(m_jumpAngle) * m_timer + m_initY;
@@ -63,6 +64,9 @@ public class Jump : MonoBehaviour {
         }
         else
             Reset();
+
+        GetComponent<SpeCapacity>().FillSpeCapBar(m_oldPosition, pos);
+        m_oldPosition = pos;
     }
 
     private void Update()
