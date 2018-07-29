@@ -70,12 +70,10 @@ public class CharacterControler : MonoBehaviour {
     private void VerticalAxisMove(float yAxis)
     {
         Vector3 pos = transform.position;
-        if (yAxis > 0)
+        if (yAxis < 0)
             m_verticalDir = E_Direction.UP;
-        else if (yAxis < 0)
+        else if (yAxis > 0)
             m_verticalDir = E_Direction.DOWN;
-        else
-            m_verticalDir = E_Direction.CENTER;
     }
 
     private void Rotate(float xAxis)
@@ -90,9 +88,9 @@ public class CharacterControler : MonoBehaviour {
         }
     }
 
-
     private void NoMove()
     {
+        m_verticalDir = E_Direction.CENTER;
         m_horizontalDir = E_Direction.CENTER;
         m_animator.SetBool("Idle", true);
     }

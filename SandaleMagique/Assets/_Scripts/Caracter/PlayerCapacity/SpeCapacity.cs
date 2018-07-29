@@ -66,7 +66,7 @@ public class SpeCapacity : MonoBehaviour
                 case E_Direction.LEFT: pos.x -= m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime; break;
             }
 
-            if (m_cControler.VerticalDir > 0)
+            if (m_cControler.VerticalDir == E_Direction.UP)
             {
                 pos.y += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime;
             }

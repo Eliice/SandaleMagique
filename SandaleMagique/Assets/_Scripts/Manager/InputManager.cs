@@ -47,6 +47,8 @@ public class InputManager : MonoBehaviour {
     private void ProcessEvent()
     {
         bool moving = ProcessXAxis();
+        ProcessYAxis();
+
         ProcessAButton();
         ProcessXButton();
 
@@ -80,15 +82,11 @@ public class InputManager : MonoBehaviour {
         return false;
     }
 
-    private bool ProcessYAxis()
+    private void ProcessYAxis()
     {
         float yValue = Input.GetAxis("Vertical");
         if (yValue >= m_xSensitivity || yValue <= -m_xSensitivity)
-        {
             E_yAxis.Invoke(yValue);
-            return true;
-        }
-        return false;
     }
 
     public bool CheckRegisterAButton()
