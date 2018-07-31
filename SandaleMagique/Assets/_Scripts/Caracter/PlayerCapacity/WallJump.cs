@@ -26,11 +26,12 @@ public class WallJump : MonoBehaviour {
     private float m_wallJumpCD = 0.2f;
     private float m_cdTimer = 0f;
     private bool m_wallTrigger = false;
+
     // Use this for initialization
     void Start () {
         m_jumpCapacity = GetComponent<Jump>();
         m_animator = GetComponent<Animator>();
-	}
+    }
 
     public void TriggerWallSlide()
     {
@@ -38,16 +39,15 @@ public class WallJump : MonoBehaviour {
             return;
         m_againWall = true;
         m_initY = transform.position.y;
-        m_timer = 0f;
-        m_jumpCapacity.Reset();
-        m_animator.SetBool("WallJump", true);
+        //m_jumpCapacity.Reset();
+        //m_animator.SetBool("WallJump", true);
     }
 
     public void DisableWallSlide()
     {
         m_againWall = false;
-        m_jumpCapacity.OnDisable();
-        m_animator.SetBool("WallJump", false);
+        //m_jumpCapacity.OnDisable();
+        //m_animator.SetBool("WallJump", false);
         m_wallTrigger = true;
     }
 
