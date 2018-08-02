@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gravity: 10
   m_jumpMaxHeigt: 20
+  m_gravityModifier: 1.5
 --- !u!95 &452048007
 Animator:
   serializedVersion: 3
@@ -324,7 +325,8 @@ MonoBehaviour:
   m_gaugeBarMaxCapacity: 10
   m_consomationRatePerUse: 10
   m_refillRateModifier: 10
-  m_dashSpeedModifier: 8
+  m_dashSpeedModifier: 2
+  m_waitTimeBeforeActivateDash: 2
 --- !u!1 &508496309
 GameObject:
   m_ObjectHideFlags: 0
