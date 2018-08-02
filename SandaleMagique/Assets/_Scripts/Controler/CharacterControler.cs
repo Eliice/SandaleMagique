@@ -40,6 +40,7 @@ public class CharacterControler : MonoBehaviour {
         m_manager.E_xAxis += Move;
         m_manager.E_yAxis += VerticalAxisMove;
         m_manager.E_noMove.AddListener(NoMove);
+        m_manager.E_noVerticalMove.AddListener(NoVerticalMove);
     }
 
     private void OnDisable()
@@ -47,6 +48,7 @@ public class CharacterControler : MonoBehaviour {
         m_manager.E_xAxis -= Move;
         m_manager.E_yAxis -= VerticalAxisMove;
         m_manager.E_noMove.RemoveListener(NoMove);
+        m_manager.E_noVerticalMove.RemoveListener(NoVerticalMove);
     }
 
     private void Move(float xAxis)
@@ -90,8 +92,12 @@ public class CharacterControler : MonoBehaviour {
 
     private void NoMove()
     {
-        m_verticalDir = E_Direction.CENTER;
         m_horizontalDir = E_Direction.CENTER;
         m_animator.SetBool("Idle", true);
+    }
+
+    private void NoVerticalMove()
+    {
+        m_verticalDir = E_Direction.CENTER;
     }
 }

@@ -325,8 +325,8 @@ MonoBehaviour:
   m_gaugeBarMaxCapacity: 10
   m_consomationRatePerUse: 10
   m_refillRateModifier: 10
-  m_dashSpeedModifier: 2
-  m_waitTimeBeforeActivateDash: 2
+  m_dashSpeedModifier: 8
+  m_waitTimeBeforeActivateDash: 0.5
 --- !u!1 &508496309
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +366,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   E_noMove:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  E_noVerticalMove:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,

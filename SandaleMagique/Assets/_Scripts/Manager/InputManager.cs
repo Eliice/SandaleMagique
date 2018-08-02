@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour {
     public UnityEvent E_aButton;
     public UnityEvent E_xButton;
     public UnityEvent E_noMove;
+    public UnityEvent E_noVerticalMove;
     public delegate void D_AxisEvent(float axisValue);
     public D_AxisEvent E_xAxis;
     public D_AxisEvent E_yAxis;
@@ -47,7 +48,7 @@ public class InputManager : MonoBehaviour {
     private void ProcessEvent()
     {
         bool moving = ProcessXAxis();
-        ProcessYAxis();
+        bool verticalMove = ProcessYAxis();
 
         ProcessAButton();
         ProcessXButton();
@@ -56,6 +57,8 @@ public class InputManager : MonoBehaviour {
         {
             E_noMove.Invoke();
         }
+        if (!verticalMove)
+            E_noVerticalMove.Invoke();
     }
 
     private void ProcessAButton()
@@ -82,11 +85,15 @@ public class InputManager : MonoBehaviour {
         return false;
     }
 
-    private void ProcessYAxis()
+    private bool ProcessYAxis()
     {
         float yValue = Input.GetAxis("Vertical");
         if (yValue >= m_xSensitivity || yValue <= -m_xSensitivity)
+        {
             E_yAxis.Invoke(yValue);
+            return true;
+        }
+        return false;
     }
 
     public bool CheckRegisterAButton()

@@ -62,38 +62,39 @@ public class SpeCapacity : MonoBehaviour
 
     private void FixedUpdate()
     {
+        /*
         Vector3 pos = transform.position;
         if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0 && !m_dashHasBeenUsed)
         {
+            //remove gravity
             transform.position = currentPos;
-            GetComponent<Rigidbody>().useGravity = false;
             Debug.DrawLine(pos, CalculateDashDir(pos), Color.red);
             StartCoroutine(ActivateDash());
         }
         if (m_dashHasBeenUsed)
             UseDash(pos);
+        */
     }
 
     private IEnumerator ActivateDash()
     {
-        yield return new WaitForSecondsRealtime(m_waitTimeBeforeActivateDash);
+        yield return new WaitForSeconds(m_waitTimeBeforeActivateDash);
         m_dashHasBeenUsed = true;
         yield break;
     }
 
     private void UseDash(Vector3 pos)
     {
-        GetComponent<Rigidbody>().useGravity = true;
         if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0)
         {
             transform.position = CalculateDashDir(pos);
             m_gaugeValue -= m_consomationRatePerUse;
         }
-        else if (m_animator.GetBool("SpeCap") && m_gaugeValue <= 0)
+        else if (m_gaugeValue <= 0)
         {
             Reset();
-            return;
         }
+        //set gravity
     }
 
     private Vector3 CalculateDashDir(Vector3 pos)
@@ -137,6 +138,7 @@ public class SpeCapacity : MonoBehaviour
 
     public void Reset()
     {
+        m_dashHasBeenUsed = false;
         m_animator.SetBool("SpeCap", false);
         OnEnable();
     }
