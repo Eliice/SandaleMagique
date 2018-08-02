@@ -21,7 +21,7 @@ public class Floor : MonoBehaviour {
     {
         if (other.gameObject == m_player)
         {
-            //m_jumpCapacity.Reset();
+            m_jumpCapacity.Reset();
             /*
             m_jumpCapacity.OnEnable();
             m_playerAnimator.SetBool("Jump", false);

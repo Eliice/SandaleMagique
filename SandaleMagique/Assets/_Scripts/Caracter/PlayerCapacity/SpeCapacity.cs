@@ -86,9 +86,14 @@ public class SpeCapacity : MonoBehaviour
     public void FillSpeCapBar(Vector3 oldPos, Vector3 currentPos)
     {
         if (oldPos.y > currentPos.y && m_gaugeValue < m_gaugeBarMaxCapacity)
+        {
             m_gaugeValue += 1 * m_refillRateModifier;
+        }
+
         if (m_gaugeValue > m_gaugeBarMaxCapacity)
+        {
             m_gaugeValue = m_gaugeBarMaxCapacity;
+        }
     }
 
     private void Update()
