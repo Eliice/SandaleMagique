@@ -80,6 +80,9 @@ public class SpeCapacity : MonoBehaviour
 
     private void UseDash(Vector3 pos)
     {
+        if (m_animator.GetBool("Jump"))
+            m_animator.SetBool("Jump", false);
+
         if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0)
         {
             currentPos = pos;

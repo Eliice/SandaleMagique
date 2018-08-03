@@ -63,7 +63,7 @@ public class Jump : MonoBehaviour
         m_timer += Time.fixedDeltaTime;
 
         pos.y = CalculateDrop(m_timer) + m_initY;
-        if (pos.y < m_jumpMaxHeigt + m_initY)
+        if (pos.y < m_jumpMaxHeigt + m_initY && !m_animator.GetBool("SpeCap"))
         {
             transform.position = pos;
         }
