@@ -62,55 +62,50 @@ public class SpeCapacity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*
         Vector3 pos = transform.position;
         if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0 && !m_dashHasBeenUsed)
         {
             //remove gravity
+            GetComponent<Rigidbody>().useGravity = false;
+
             transform.position = currentPos;
             Debug.DrawLine(pos, CalculateDashDir(pos), Color.red);
-            StartCoroutine(ActivateDash());
+            if (Input.GetButtonUp("SpeCap"))
+                m_dashHasBeenUsed = true;
         }
+
         if (m_dashHasBeenUsed)
             UseDash(pos);
-        */
-    }
-
-    private IEnumerator ActivateDash()
-    {
-        yield return new WaitForSeconds(m_waitTimeBeforeActivateDash);
-        m_dashHasBeenUsed = true;
-        yield break;
     }
 
     private void UseDash(Vector3 pos)
     {
         if (m_animator.GetBool("SpeCap") && m_gaugeValue > 0)
         {
+            currentPos = pos;
             transform.position = CalculateDashDir(pos);
             m_gaugeValue -= m_consomationRatePerUse;
         }
         else if (m_gaugeValue <= 0)
         {
             Reset();
+            //set gravity
+            GetComponent<Rigidbody>().useGravity = true;
         }
-        //set gravity
     }
 
     private Vector3 CalculateDashDir(Vector3 pos)
     {
-        switch (m_cControler.HorizontalDir)
-        {
-            case E_Direction.RIGHT: pos.x += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime; break;
-            case E_Direction.LEFT: pos.x -= m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime; break;
-        }
+        Vector3 newPos = pos;
+        if (m_cControler.HorizontalDir == E_Direction.RIGHT)
+            newPos.x += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime;
+        else if (m_cControler.HorizontalDir == E_Direction.LEFT)
+            newPos.x -= m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime;
 
         if (m_cControler.VerticalDir == E_Direction.UP)
-        {
-            pos.y += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime;
-        }
+            newPos.y += m_dashSpeedModifier * m_characterSpeed * Time.fixedDeltaTime;
 
-        return pos;
+        return newPos;
     }
 
 
