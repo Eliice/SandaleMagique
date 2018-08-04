@@ -23,7 +23,7 @@ public class CharacterControler : MonoBehaviour {
     private Character m_character = null;
     private Animator m_animator = null;
 
-
+    private bool m_enableMoving = true;
 
     void Start () {
         m_manager = InputManager.Instance;
@@ -54,28 +54,38 @@ public class CharacterControler : MonoBehaviour {
     private void Move(float xAxis)
     {
         Rotate(xAxis);
-        Vector3 pos = transform.position;
-        if(xAxis > 0)
+        if (m_enableMoving)
         {
-            pos.x += 1 * m_character.Speed * Time.deltaTime;
-            m_horizontalDir = E_Direction.RIGHT;
-        }
-        else
-        {
-            pos.x += -1 * m_character.Speed * Time.deltaTime;
-            m_horizontalDir = E_Direction.LEFT;
-        }
-            
-        transform.position = pos;
+            Vector3 pos = transform.position;
+            if (xAxis > 0)
+            {
+                pos.x += 1 * m_character.Speed * Time.deltaTime;
+                m_horizontalDir = E_Direction.RIGHT;
+            }
+            else
+            {
+                pos.x += -1 * m_character.Speed * Time.deltaTime;
+                m_horizontalDir = E_Direction.LEFT;
+            }
+            transform.position = pos;
+        }  
+    }
+
+    public void EnableMoving(bool value)
+    {
+        m_enableMoving = value;
     }
 
     private void VerticalAxisMove(float yAxis)
     {
-        Vector3 pos = transform.position;
-        if (yAxis < 0)
-            m_verticalDir = E_Direction.UP;
-        else if (yAxis > 0)
-            m_verticalDir = E_Direction.DOWN;
+        if (m_enableMoving)
+        {
+            Vector3 pos = transform.position;
+            if (yAxis < 0)
+                m_verticalDir = E_Direction.UP;
+            else if (yAxis > 0)
+                m_verticalDir = E_Direction.DOWN;
+        }
     }
 
     private void Rotate(float xAxis)

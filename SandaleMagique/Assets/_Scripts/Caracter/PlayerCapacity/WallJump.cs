@@ -67,7 +67,7 @@ public class WallJump : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if(m_againWall)
+        if(m_againWall && !m_animator.GetBool("SpeCap"))
         {
             Vector3 pos = transform.position;
             pos.y = m_initY + m_FallCurve.Evaluate(m_timer);
