@@ -92,7 +92,7 @@ public class Dash : MonoBehaviour {
         if (m_dashDirection.x == 0 && m_dashDirection.y == 0)
         {
             m_dashDirection.x = m_characterSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal");
-            m_dashDirection.y = m_characterSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical");
+            m_dashDirection.y = -1 * m_characterSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical");
         }
         else
         {
