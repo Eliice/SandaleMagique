@@ -9,8 +9,6 @@ public class Floor : MonoBehaviour {
     private Jump m_jumpCapacity = null;
     private FallEnergie m_energie = null;
 
-
-
     private void Start()
     {
         m_player = LevelManager.Instance.Player;

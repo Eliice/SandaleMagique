@@ -8,7 +8,7 @@ public class FallEnergie : MonoBehaviour {
     private Slider m_energiSlider = null;
     [SerializeField, Range(0, 50)]
     private float m_fillMultiplier = 1;
-    [SerializeField, Range(0, 10)]
+    [SerializeField, Range(0, 50)]
     private float m_consumptionPerSecond = 1;
 
     private Vector3 m_previousPos = new Vector3();
