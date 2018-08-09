@@ -7,6 +7,7 @@ public class Floor : MonoBehaviour {
     private GameObject m_player = null;
     private Animator m_playerAnimator = null;
     private Jump m_jumpCapacity = null;
+    private FallEnergie m_energie = null;
 
 
 
@@ -15,6 +16,7 @@ public class Floor : MonoBehaviour {
         m_player = LevelManager.Instance.Player;
         m_playerAnimator = m_player.GetComponent<Animator>();
         m_jumpCapacity = m_player.GetComponent<Jump>();
+        m_energie = m_player.GetComponent<FallEnergie>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,10 +24,17 @@ public class Floor : MonoBehaviour {
         if (other.gameObject == m_player)
         {
             m_jumpCapacity.Reset();
-            /*
-            m_jumpCapacity.OnEnable();
-            m_playerAnimator.SetBool("Jump", false);
-            */
+            
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+
+        if (other.gameObject == m_player)
+        {
+            m_energie.ResetEnergie();
+
         }
     }
 

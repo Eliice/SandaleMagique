@@ -16,7 +16,6 @@ public class Jump : MonoBehaviour
     private float m_characterSpeed;
     private Vector3 m_oldPosition;
 
-    private SpeCapacity m_speCap;
     private bool jumpAllowed = true;
 
     private float m_initY = 0f;
@@ -36,7 +35,6 @@ public class Jump : MonoBehaviour
         m_animator = GetComponent<Animator>();
         InputManager.Instance.E_aButton.AddListener(TriggerJump);
         m_characterSpeed = gameObject.GetComponent<Character>().Speed;
-        m_speCap = GetComponent<SpeCapacity>();
     }
 
     public void OnEnable()
@@ -68,7 +66,6 @@ public class Jump : MonoBehaviour
             transform.position = pos;
         }
 
-        m_speCap.FillSpeCapBar(m_oldPosition, pos);
         m_oldPosition = pos;
     }
 
