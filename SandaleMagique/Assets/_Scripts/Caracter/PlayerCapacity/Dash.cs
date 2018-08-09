@@ -7,22 +7,27 @@ public class Dash : MonoBehaviour {
     [SerializeField]
     private float m_dashSpeedMultiplier = 1.5f;
 
+    [SerializeField]
+    private float m_dashMultiplicator = 6f;
+
     private InputManager m_inputManager = null;
     private Animator m_animator = null;
     private CharacterControler m_characterController = null;
     private float m_characterSpeed = 1;
-    private FallEnergie m_energiePool = null;
     private Rigidbody m_body = null;
 
     private Vector3 m_freezePosition = new Vector3();
     private bool m_dashHasBeenUsed = false;
+
+
+    private float m_velocity = 0;
+
 
     void Start () {
         m_animator = GetComponent<Animator>();
         m_inputManager = InputManager.Instance;
         m_characterController = gameObject.GetComponent<CharacterControler>();
         m_characterSpeed = GetComponent<Character>().Speed * m_dashSpeedMultiplier;
-        m_energiePool = GetComponent<FallEnergie>();
         m_body = GetComponent<Rigidbody>();
         OnEnable();
     }
@@ -42,6 +47,7 @@ public class Dash : MonoBehaviour {
     {
         if (!m_animator.GetBool("SpeCap") && m_energiePool.getEnergie() > 0)
         {
+            m_velocity = m_body.velocity.y;
             m_animator.SetBool("SpeCap", true);
             m_body.useGravity = false;
             m_animator.SetBool("Jump", false);
@@ -73,7 +79,9 @@ public class Dash : MonoBehaviour {
     {
         m_body.useGravity = true;
         Vector3 dashDirection = CalculateDashDir(transform.position);
-        m_body.AddForce(dashDirection* m_energiePool.getEnergie() * m_energiePool.ForceMultiplicator, ForceMode.Impulse);
+
+
+        m_body.velocity = dashDirection * m_velocity * m_dashMultiplicator;
     }
 
 
@@ -81,19 +89,12 @@ public class Dash : MonoBehaviour {
     {
         Vector3 newPos = pos;
 
-            int x=0;
-            int y = 0;
-            if (Input.GetAxis("Horizontal") > 0)
-                x = 1;
-            else if (Input.GetAxis("Horizontal") < 0)
-                x = -1;
-
-            if (Input.GetAxis("Vertical") > 0)
-                y = 1;
-            else if (Input.GetAxis("Vertical") < 0)
-                y = -1;
-            newPos.x = m_characterSpeed * Time.fixedDeltaTime * x;
-            newPos.y = -1 * m_characterSpeed * Time.fixedDeltaTime *y;
+        float x=0;
+        float y = 0;
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+        newPos.x = -1*m_characterSpeed * Time.fixedDeltaTime * x;
+        newPos.y = m_characterSpeed * Time.fixedDeltaTime *y;
         return newPos;
     }
 
