@@ -77,7 +77,7 @@ public class Dash : MonoBehaviour {
         {
             transform.position = CalculateDashDir(transform.position);
         }
-        else if(m_dashHasBeenUsed && !(m_energiePool.getEnergie() <= 0))
+        else if(m_dashHasBeenUsed && (m_energiePool.getEnergie() <=0.05f))
         {
             m_body.useGravity = true;
             m_characterController.EnableMoving(true);
@@ -103,6 +103,8 @@ public class Dash : MonoBehaviour {
                 y = -1;
             m_dashDirection.x = m_characterSpeed * Time.fixedDeltaTime * x;
             m_dashDirection.y = -1 * m_characterSpeed * Time.fixedDeltaTime *y;
+            newPos.x += m_dashDirection.x;
+            newPos.y += m_dashDirection.y;
         }
         else
         {
