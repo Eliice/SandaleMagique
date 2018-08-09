@@ -8,6 +8,7 @@ public class Floor : MonoBehaviour {
     private Animator m_playerAnimator = null;
     private Jump m_jumpCapacity = null;
     private FallEnergie m_energie = null;
+    private Dash m_dash = null;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class Floor : MonoBehaviour {
         m_playerAnimator = m_player.GetComponent<Animator>();
         m_jumpCapacity = m_player.GetComponent<Jump>();
         m_energie = m_player.GetComponent<FallEnergie>();
+        m_dash = m_player.GetComponent<Dash>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +24,7 @@ public class Floor : MonoBehaviour {
         if (other.gameObject == m_player)
         {
             m_jumpCapacity.Reset();
-            
+            m_dash.Reset();
         }
     }
 

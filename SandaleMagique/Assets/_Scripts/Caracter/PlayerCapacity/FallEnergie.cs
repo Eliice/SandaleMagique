@@ -15,9 +15,9 @@ public class FallEnergie : MonoBehaviour {
 
 
     private bool m_shoudRemove = false;
-    public bool ShoudRemove { set { m_shoudRemove = value; } }
+    public bool ShoudRemove { set { m_shoudRemove = value; m_ShoudAdd = !value; } }
 
-
+    private bool m_ShoudAdd = true;
 
     public float getEnergie()
     {
@@ -26,22 +26,24 @@ public class FallEnergie : MonoBehaviour {
 
      private void FixedUpdate()
      {
-        if(m_previousPos.y > transform.position.y)
+        if(m_previousPos.y > transform.position.y && m_ShoudAdd)
         {
-            m_energiSlider.value += (m_previousPos.y - transform.position.y) * m_fillMultiplier * Time.deltaTime;
+            m_energiSlider.value += (m_previousPos.y - transform.position.y) * m_fillMultiplier;
         }
         if (m_shoudRemove)
         {
             m_energiSlider.value -= m_consumptionPerSecond * Time.deltaTime;
-            m_shoudRemove = false;
         }
         m_previousPos = transform.position;
+
 	}
 
 
     public void ResetEnergie()
     {
         m_energiSlider.value = 0;
+        m_ShoudAdd = true;
+        m_shoudRemove = false;
     }
 
 
