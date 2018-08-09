@@ -16,6 +16,12 @@ public class Dash : MonoBehaviour {
 
     private Vector3 m_freezePosition = new Vector3();
     private bool m_dashHasBeenUsed = false;
+
+    private Vector2 m_dashDirection;
+
+
+
+
     void Start () {
         m_animator = GetComponent<Animator>();
         m_inputManager = InputManager.Instance;
@@ -56,6 +62,7 @@ public class Dash : MonoBehaviour {
         {
             m_energiePool.ShoudRemove = true;
             m_dashHasBeenUsed = true;
+            
         }
     }
 
@@ -81,13 +88,17 @@ public class Dash : MonoBehaviour {
     private Vector3 CalculateDashDir(Vector3 pos)
     {
         Vector3 newPos = pos;
-        if (m_characterController.HorizontalDir == E_Direction.RIGHT)
-            newPos.x += m_characterSpeed * Time.fixedDeltaTime;
-        else if (m_characterController.HorizontalDir == E_Direction.LEFT)
-            newPos.x -= m_characterSpeed * Time.fixedDeltaTime;
-        if (m_characterController.VerticalDir == E_Direction.UP)
-            newPos.y += m_characterSpeed * Time.fixedDeltaTime;
 
+        if (m_dashDirection.x == 0 && m_dashDirection.y == 0)
+        {
+            m_dashDirection.x = m_characterSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal");
+            m_dashDirection.y = m_characterSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical");
+        }
+        else
+        {
+            newPos.x += m_dashDirection.x;
+            newPos.y += m_dashDirection.y;
+        }
         return newPos;
     }
 
@@ -96,6 +107,8 @@ public class Dash : MonoBehaviour {
         m_animator.SetBool("SpeCap", false);
         m_dashHasBeenUsed = false;
         m_characterController.EnableMoving(true);
+        m_dashDirection.x = 0;
+        m_dashDirection.y = 0;
         OnEnable();
     }
 
