@@ -32,7 +32,7 @@ public class FallEnergie : MonoBehaviour {
         }
         if (m_shoudRemove)
         {
-            m_energiSlider.value -= m_consumptionPerSecond * Time.deltaTime;
+            m_energiSlider.value -= (transform.position.y - m_previousPos.y) * m_consumptionPerSecond;
         }
         m_previousPos = transform.position;
 
