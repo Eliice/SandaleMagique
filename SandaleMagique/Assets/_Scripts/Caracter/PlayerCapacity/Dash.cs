@@ -95,6 +95,7 @@ public class Dash : MonoBehaviour {
     {
         m_animator.SetBool("SpeCap", false);
         m_dashHasBeenUsed = false;
+        m_characterController.EnableMoving(true);
         OnEnable();
     }
 
