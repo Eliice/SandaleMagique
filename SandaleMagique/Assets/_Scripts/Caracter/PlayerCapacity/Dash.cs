@@ -45,7 +45,7 @@ public class Dash : MonoBehaviour {
 
     public void TriggerSpeCap()
     {
-        if (!m_animator.GetBool("SpeCap") && m_energiePool.getEnergie() > 0)
+        if (!m_animator.GetBool("SpeCap"))
         {
             m_velocity = m_body.velocity.y;
             m_animator.SetBool("SpeCap", true);
