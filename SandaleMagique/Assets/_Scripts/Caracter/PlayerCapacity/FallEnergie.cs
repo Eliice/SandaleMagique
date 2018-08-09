@@ -9,15 +9,11 @@ public class FallEnergie : MonoBehaviour {
     [SerializeField, Range(0, 50)]
     private float m_fillMultiplier = 1;
     [SerializeField, Range(0, 50)]
-    private float m_consumptionPerSecond = 1;
+    private float m_forceMultiplicator = 5;
+    public float ForceMultiplicator { get { return m_forceMultiplicator; } }
 
     private Vector3 m_previousPos = new Vector3();
 
-
-    private bool m_shoudRemove = false;
-    public bool ShoudRemove { set { m_shoudRemove = value; m_ShoudAdd = !value; } }
-
-    private bool m_ShoudAdd = true;
 
     public float getEnergie()
     {
@@ -26,14 +22,7 @@ public class FallEnergie : MonoBehaviour {
 
      private void FixedUpdate()
      {
-        if(m_previousPos.y > transform.position.y && m_ShoudAdd)
-        {
-            m_energiSlider.value += (m_previousPos.y - transform.position.y) * m_fillMultiplier;
-        }
-        if (m_shoudRemove)
-        {
-            m_energiSlider.value -= (transform.position.y - m_previousPos.y) * m_consumptionPerSecond;
-        }
+        m_energiSlider.value += (m_previousPos.y - transform.position.y) * m_fillMultiplier;
         m_previousPos = transform.position;
 
 	}
@@ -42,8 +31,6 @@ public class FallEnergie : MonoBehaviour {
     public void ResetEnergie()
     {
         m_energiSlider.value = 0;
-        m_ShoudAdd = true;
-        m_shoudRemove = false;
     }
 
 

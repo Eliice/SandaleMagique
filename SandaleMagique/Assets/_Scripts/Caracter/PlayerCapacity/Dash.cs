@@ -17,11 +17,6 @@ public class Dash : MonoBehaviour {
     private Vector3 m_freezePosition = new Vector3();
     private bool m_dashHasBeenUsed = false;
 
-    private Vector2 m_dashDirection;
-
-
-
-
     void Start () {
         m_animator = GetComponent<Animator>();
         m_inputManager = InputManager.Instance;
@@ -58,11 +53,10 @@ public class Dash : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetButtonUp("SpeCap"))
+        if (Input.GetButtonUp("SpeCap") && !m_dashHasBeenUsed)
         {
-            m_energiePool.ShoudRemove = true;
             m_dashHasBeenUsed = true;
-            
+            ExecDash();
         }
     }
 
@@ -73,23 +67,20 @@ public class Dash : MonoBehaviour {
             transform.position = m_freezePosition;
             return;
         }
-        if (m_dashHasBeenUsed && m_energiePool.getEnergie() > 0 )
-        {
-            transform.position = CalculateDashDir(transform.position);
-        }
-        else if(m_dashHasBeenUsed && (m_energiePool.getEnergie() <=0.05f))
-        {
-            m_body.useGravity = true;
-            m_characterController.EnableMoving(true);
-        }
     }
+
+    private void ExecDash()
+    {
+        m_body.useGravity = true;
+        Vector3 dashDirection = CalculateDashDir(transform.position);
+        m_body.AddForce(dashDirection* m_energiePool.getEnergie() * m_energiePool.ForceMultiplicator, ForceMode.Impulse);
+    }
+
 
     private Vector3 CalculateDashDir(Vector3 pos)
     {
         Vector3 newPos = pos;
 
-        if (m_dashDirection.x == 0 && m_dashDirection.y == 0)
-        {
             int x=0;
             int y = 0;
             if (Input.GetAxis("Horizontal") > 0)
@@ -101,16 +92,8 @@ public class Dash : MonoBehaviour {
                 y = 1;
             else if (Input.GetAxis("Vertical") < 0)
                 y = -1;
-            m_dashDirection.x = m_characterSpeed * Time.fixedDeltaTime * x;
-            m_dashDirection.y = -1 * m_characterSpeed * Time.fixedDeltaTime *y;
-            newPos.x += m_dashDirection.x;
-            newPos.y += m_dashDirection.y;
-        }
-        else
-        {
-            newPos.x += m_dashDirection.x;
-            newPos.y += m_dashDirection.y;
-        }
+            newPos.x = m_characterSpeed * Time.fixedDeltaTime * x;
+            newPos.y = -1 * m_characterSpeed * Time.fixedDeltaTime *y;
         return newPos;
     }
 
@@ -119,8 +102,6 @@ public class Dash : MonoBehaviour {
         m_animator.SetBool("SpeCap", false);
         m_dashHasBeenUsed = false;
         m_characterController.EnableMoving(true);
-        m_dashDirection.x = 0;
-        m_dashDirection.y = 0;
         OnEnable();
     }
 
