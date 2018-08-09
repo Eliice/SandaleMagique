@@ -34,7 +34,7 @@ public class Floor : MonoBehaviour {
         if (other.gameObject == m_player)
         {
             m_energie.ResetEnergie();
-
+            m_dash.Reset();
         }
     }
 
