@@ -76,10 +76,9 @@ public class Jump : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.Instance.CheckRegisterAButton())
+        if (Input.GetButtonDown("Jump"))
         {
             OnEnable();
-            enabled = false;
         }
     }
 
