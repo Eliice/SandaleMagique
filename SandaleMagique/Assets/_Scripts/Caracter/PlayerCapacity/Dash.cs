@@ -10,6 +10,9 @@ public class Dash : MonoBehaviour {
     [SerializeField]
     private float m_dashMultiplicator = 6f;
 
+    [SerializeField]
+    private float m_xAttenuation = 0.1F;
+
     private InputManager m_inputManager = null;
     private Animator m_animator = null;
     private CharacterControler m_characterController = null;
@@ -51,7 +54,7 @@ public class Dash : MonoBehaviour {
             m_animator.SetBool("SpeCap", true);
             m_body.useGravity = false;
             m_animator.SetBool("Jump", false);
-            m_characterController.EnableMoving(false);
+            //m_characterController.EnableMoving(false);
             m_freezePosition = transform.position;
         }
         OnDisable();
@@ -93,7 +96,10 @@ public class Dash : MonoBehaviour {
         float y = 0;
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
-        newPos.x = -1*m_characterSpeed * Time.fixedDeltaTime * x;
+        if (y > 0)
+            newPos.x = -1*m_characterSpeed * Time.fixedDeltaTime * (x / (m_xAttenuation - y));
+        else
+            newPos.x = -1 * m_characterSpeed * Time.fixedDeltaTime * (x / m_xAttenuation);
         newPos.y = m_characterSpeed * Time.fixedDeltaTime *y;
         return newPos;
     }
@@ -102,7 +108,7 @@ public class Dash : MonoBehaviour {
     {
         m_animator.SetBool("SpeCap", false);
         m_dashHasBeenUsed = false;
-        m_characterController.EnableMoving(true);
+        //m_characterController.EnableMoving(true);
         OnEnable();
     }
 
