@@ -97,7 +97,7 @@ public class Dash : MonoBehaviour {
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
         if (y > 0)
-            newPos.x = -1*m_characterSpeed * Time.fixedDeltaTime * (x / (m_xAttenuation - y));
+            newPos.x = -1*m_characterSpeed * Time.fixedDeltaTime * (x / (m_xAttenuation / (1.001F - y)));
         else
             newPos.x = -1 * m_characterSpeed * Time.fixedDeltaTime * (x / m_xAttenuation);
         newPos.y = m_characterSpeed * Time.fixedDeltaTime *y;
