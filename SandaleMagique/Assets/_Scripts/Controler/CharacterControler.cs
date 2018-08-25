@@ -34,6 +34,13 @@ public class CharacterControler : MonoBehaviour {
         OnEnable();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject == this)
+        {
+            m_animator.SetBool("Jump", false);
+        }
+    }
 
     private void OnEnable()
     {
